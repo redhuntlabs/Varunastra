@@ -232,11 +232,11 @@ func isExcluded(filePath string) bool {
 		// Binaries and Executables
 		"bin",
 		"/sbin",
-		"/usr/bin",
-		"/usr/sbin",
-		"/usr/games",
-		"/usr/local/bin",
-		"/usr/local/sbin",
+		"usr/bin",
+		"usr/sbin",
+		"usr/games",
+		"usr/local/bin",
+		"usr/local/sbin",
 	}
 
 	for _, dir := range excludedDirs {
