@@ -44,7 +44,13 @@ func handleScan(cli CLI) {
 	imageName := cli.Target
 
 	// Process each image
-	processImage(imageName)
+	err := processImage(imageName)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	close(taskChannel)
+	workerwg.Wait()
 
 	log.Println("Scanning completed.")
 

@@ -19,46 +19,47 @@ Varunastra aims to fortify Docker systems by detecting hidden secrets and vulner
 ### Usage
 
 ```bash
-./varunastra <docker-image>
+❯ varunastra -h
+Usage: varunastra --target=STRING [flags]
+
+Flags:
+  -h, --help             Show context-sensitive help.
+      --target=STRING    Target string
+      --scans=STRING     Comma-separated scans (secrets,vuln,assets)
 ```
 
 
 #### Example 
 
 ```bash
-./varunastra trufflesecurity/secrets
+ varunastra --target trufflesecurity/secrets --scans "secrets,vuln,assets"
 ```
 
 ```
-2024/06/21 18:57:24 Regex File refresh not required. The latest file is within the 1-hour threshold.
-2024/06/21 18:57:24 regexes.json
-2024/06/21 18:57:24 Starting Scan for Image: trufflesecurity/secrets
-2024/06/21 18:57:27 Processing layer with digest: sha256:a794864de8c4ff087813fd66cff74601b84cbef8fe1a1f17f9923b40cf051b59
-2024/06/21 18:57:27
-2024/06/21 18:57:27 Secrets found -> Type: AWS Secret Access Key | Secret: aws_secret_access_key = Tg0pz8Jii8hkLx4+PnUisM8GmKs3a2DK+9qz/lie | On Path: aws
-2024/06/21 18:57:27
-2024/06/21 18:57:27 Secrets found -> Type: AWS Access Key | Secret: AKIAXYZDQCEN4B6JSJQI | On Path: aws
-2024/06/21 18:57:27 Processing history entries
-2024/06/21 18:57:27 Successfully removed Docker image: trufflesecurity/secrets
-2024/06/21 18:57:27 Scanning completed.
+2024/10/20 21:32:03 Checking if config file exist
+2024/10/20 21:32:03 Starting Scan for Image: trufflesecurity/secrets
+2024/10/20 21:32:05 Scanning Layers: sha256:a794864de8c4ff087813fd66cff74601b84cbef8fe1a1f17f9923b40cf051b59
+2024/10/20 21:32:05
+2024/10/20 21:32:05 Secrets found -> Type: Amazon AWS Access Key ID | Secret: AKIAXYZDQCEN4B6JSJQI | On Path: aws
+2024/10/20 21:32:05
+2024/10/20 21:32:05 Secrets found -> Type: AWS API Key | Secret: AKIAXYZDQCEN4B6JSJQI | On Path: aws
+2024/10/20 21:32:05 Scanning completed.
 {
   "target": "trufflesecurity/secrets",
-  "data": [
+  "secrets": [
     {
-      "issue": "Secret Leaked in Docker Container",
+      "issue": "Secret Leaked in Docker Layer sha256:a794864de8c4ff087813fd66cff74601b84cbef8fe1a1f17f9923b40cf051b59",
       "asset": "aws",
-      "title": "AWS Secret Access Key",
-      "variant_description": "aws_secret_access_key = Tg0pz8Jii8hkLx4+PnUisM8GmKs3a2DK+9qz/lie",
-      "layer_digest": "sha256:a794864de8c4ff087813fd66cff74601b84cbef8fe1a1f17f9923b40cf051b59"
+      "type": "Amazon AWS Access Key ID",
+      "secret": "AKIAXYZDQCEN4B6JSJQI"
     },
     {
-      "issue": "Secret Leaked in Docker Container",
+      "issue": "Secret Leaked in Docker Layer sha256:a794864de8c4ff087813fd66cff74601b84cbef8fe1a1f17f9923b40cf051b59",
       "asset": "aws",
-      "title": "AWS Access Key",
-      "variant_description": "AKIAXYZDQCEN4B6JSJQI",
-      "layer_digest": "sha256:a794864de8c4ff087813fd66cff74601b84cbef8fe1a1f17f9923b40cf051b59"
+      "type": "AWS API Key",
+      "secret": "AKIAXYZDQCEN4B6JSJQI"
     }
   ],
-  "Version": "1.0"
+  "vulnerabilities": null
 }
 ```
