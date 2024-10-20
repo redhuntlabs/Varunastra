@@ -175,7 +175,7 @@ func processLayer(layer v1.Layer, digest v1.Hash, imageName string) error {
 			continue
 		}
 
-		if strings.Contains(header.Name, ".git/HEAD") {
+		if strings.Contains(header.Name, ".git/HEAD") && scanMap["vuln"] {
 			gitSkip = true
 			handleGitRepo(header.Name)
 			continue

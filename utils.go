@@ -1,48 +1,12 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
-	"os"
-	"regexp"
 	"strings"
 
 	v1 "github.com/google/go-containerregistry/pkg/v1"
 )
-
-// func GenerateCustomID() string {
-// 	currentTime := time.Now().UnixNano()
-// 	randomNumber, _ := rand.Int(rand.Reader, big.NewInt(1000000))
-// 	return fmt.Sprintf("%d-%d", currentTime, randomNumber)
-// }
-
-func Init() {
-	// Read the JSON file
-	data, err := os.ReadFile(REGEXFILE)
-	if err != nil {
-		log.Fatalf("Error reading file: %v", err)
-	}
-
-	// Unmarshal JSON data into a map
-
-	if err := json.Unmarshal(data, &regexes); err != nil {
-		log.Fatalf("Error unmarshalling JSON: %v", err)
-	}
-
-	var regexDB RegexDB
-	var dbs []RegexDB
-
-	for title, pattern := range regexes {
-
-		regexDB.ID = title
-		regexDB.Pattern = regexp.MustCompile(pattern)
-
-		dbs = append(dbs, regexDB)
-	}
-
-	regexStore = dbs
-}
 
 func checkDupEntry(secret, typestr string, path string, finalResult []SecretIssue) bool {
 	for _, dxresult := range finalResult {

@@ -2,7 +2,11 @@ module example.com/varunastra
 
 go 1.21.1
 
-require github.com/google/go-containerregistry v0.19.2
+require (
+	github.com/alecthomas/kong v1.2.1
+	github.com/google/go-containerregistry v0.19.2
+	gopkg.in/yaml.v2 v2.4.0
+)
 
 require (
 	github.com/containerd/stargz-snapshotter/estargz v0.14.3 // indirect
@@ -12,6 +16,7 @@ require (
 	github.com/docker/docker-credential-helpers v0.7.0 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/klauspost/compress v1.17.9 // indirect
+	github.com/kr/pretty v0.3.1 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.1.0 // indirect

@@ -40,7 +40,7 @@ func isExcluded(filePath string) bool {
 
 	// Check if the normalized file path matches any exclusion pattern
 	for _, pattern := range excludedPatterns {
-		if pattern.Pattern.MatchString(normalizedPath) {
+		if pattern.MatchString(normalizedPath) {
 			return true
 		}
 	}

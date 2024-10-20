@@ -5,12 +5,30 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"sync"
+
+	"github.com/alecthomas/kong"
 )
 
-func main() {
+// handleScan processes the scan command.
+func handleScan(cli CLI) {
+	// Process scans
+	defaultScans := []string{"secrets", "vuln", "assets"}
 
-	Init()
+	if cli.Scans == "" {
+		for _, scan := range defaultScans {
+			scanMap[scan] = true
+		}
+	} else {
+		scanList := strings.Split(cli.Scans, ",")
+		for _, scan := range defaultScans {
+			scanMap[scan] = false // Default to false
+		}
+		for _, scan := range scanList {
+			scanMap[scan] = true // Set specified scans to true
+		}
+	}
 
 	var workerwg sync.WaitGroup
 
@@ -22,7 +40,8 @@ func main() {
 	if len(os.Args) < 2 {
 		log.Fatalf("Usage: %s <docker-image>", os.Args[0])
 	}
-	imageName := os.Args[1]
+
+	imageName := cli.Target
 
 	// Process each image
 	processImage(imageName)
@@ -33,5 +52,37 @@ func main() {
 
 	data, _ := json.MarshalIndent(finalOutput, "", "  ")
 	fmt.Println(string(data))
+}
 
+func main() {
+
+	var cli CLI
+	ctx := kong.Parse(&cli)
+
+	// Process scans
+	scanMap := make(map[string]bool)
+	defaultScans := []string{"secrets", "vuln", "assets"}
+
+	if cli.Scans == "" {
+		for _, scan := range defaultScans {
+			scanMap[scan] = true
+		}
+	} else {
+		scanList := strings.Split(cli.Scans, ",")
+		for _, scan := range defaultScans {
+			scanMap[scan] = false // Default to false
+		}
+		for _, scan := range scanList {
+			scanMap[scan] = true // Set specified scans to true
+		}
+	}
+
+	err := LoadConfig()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Process the command based on the context
+	handleScan(cli)
+	ctx.Exit(0)
 }
