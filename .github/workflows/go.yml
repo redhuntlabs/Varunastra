@@ -44,11 +44,10 @@ jobs:
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
-        with:
-          tag: ${{ github.event.release.tag_name }}  # Use the release tag for the upload
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub Actions
         with:
+          tag: ${{ github.event.release.tag_name }}  # Use the release tag for the upload
           files: |
             varunastra_linux_amd64.zip
             varunastra_linux_arm64.zip
