@@ -5,14 +5,18 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sync"
 )
 
 func main() {
 
-	if len(regexData) < 1 {
-		if !serializeRegexDB() {
-			log.Fatalln("Error serializing regex data. Exiting...")
-		}
+	Init()
+
+	var workerwg sync.WaitGroup
+
+	for i := 0; i < workerCount; i++ {
+		workerwg.Add(1)
+		go worker(&workerwg)
 	}
 
 	if len(os.Args) < 2 {
@@ -21,15 +25,13 @@ func main() {
 	imageName := os.Args[1]
 
 	// Process each image
-	log.Println("Starting Scan for Image:", imageName)
 	processImage(imageName)
 
 	log.Println("Scanning completed.")
 
-	finalop.Target = imageName
-	finalop.Data = finalResult
-	finalop.Version = "1.0"
-	data, _ := json.MarshalIndent(finalop, "", "  ")
+	finalOutput.Target = imageName
+
+	data, _ := json.MarshalIndent(finalOutput, "", "  ")
 	fmt.Println(string(data))
 
 }
