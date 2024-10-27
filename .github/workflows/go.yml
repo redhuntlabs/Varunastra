@@ -6,12 +6,12 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     strategy:
       matrix:
-        os: [ubuntu-latest, macos-latest]  # OS for building
-        arch: [amd64, arm64]                # Architectures for building
+        os: [ubuntu-latest, macos-latest]
+        arch: [amd64, arm64]
 
     steps:
       - name: Checkout code
@@ -20,34 +20,34 @@ jobs:
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: '1.21.1'  # Specify your Go version here
+          go-version: '1.23'  # Correct Go version format
 
       - name: Build binaries
         run: |
           if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
             if [[ "${{ matrix.arch }}" == "amd64" ]]; then
-              GOOS=linux GOARCH=amd64 go build .
-              zip varunastra_linux_amd64.zip myapp
+              GOOS=linux GOARCH=amd64 go build -o varunastra .
+              zip varunastra_linux_amd64.zip varunastra
             elif [[ "${{ matrix.arch }}" == "arm64" ]]; then
-              GOOS=linux GOARCH=arm64 go build .
-              zip varunastra_linux_arm64.zip myapp
+              GOOS=linux GOARCH=arm64 go build -o varunastra .
+              zip varunastra_linux_arm64.zip varunastra
             fi
           elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
             if [[ "${{ matrix.arch }}" == "amd64" ]]; then
-              GOOS=darwin GOARCH=amd64 go build .
-              zip varunastra_darwin_amd64.zip myapp
+              GOOS=darwin GOARCH=amd64 go build -o varunastra .
+              zip varunastra_darwin_amd64.zip varunastra
             elif [[ "${{ matrix.arch }}" == "arm64" ]]; then
-              GOOS=darwin GOARCH=arm64 go build .
-              zip varunastra_darwin_arm64.zip myapp
+              GOOS=darwin GOARCH=arm64 go build -o varunastra .
+              zip varunastra_darwin_arm64.zip varunastra
             fi
           fi
 
       - name: Upload binaries to release
         uses: softprops/action-gh-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Automatically provided by GitHub Actions
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag: ${{ github.event.release.tag_name }}  # Use the release tag for the upload
+          tag: ${{ github.event.release.tag_name }}
           files: |
             varunastra_linux_amd64.zip
             varunastra_linux_arm64.zip
