@@ -1,4 +1,8 @@
 github.com/BurntSushi/toml v1.2.1/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
+github.com/Devang-Solanki/go-ruby-bundler-audit v0.0.0-20240628095326-ed9f8dcd65cb h1:OBBMkNJk1zTs+AOpvh4GYFWCAQR1UxxWhINZwRt2b5w=
+github.com/Devang-Solanki/go-ruby-bundler-audit v0.0.0-20240628095326-ed9f8dcd65cb/go.mod h1:qr7eikDhBD1r466Sr1CaAUpADNMcH9oAzntdXfJllUs=
+github.com/Masterminds/semver/v3 v3.2.1 h1:RN9w6+7QoMeJVGyfmbcgs28Br8cvmnucEXnY0rYXWg0=
+github.com/Masterminds/semver/v3 v3.2.1/go.mod h1:qvl/7zhW3nngYb5+80sSMF+FG2BjYrf8m9wsX0PNOMQ=
 github.com/alecthomas/assert/v2 v2.10.0 h1:jjRCHsj6hBJhkmhznrCzoNpbA3zqy0fYiUcYZP/GkPY=
 github.com/alecthomas/assert/v2 v2.10.0/go.mod h1:Bze95FyfUr7x34QZrjL+XP+0qgp/zg8yS+TtBj1WA3k=
 github.com/alecthomas/kong v1.2.1 h1:E8jH4Tsgv6wCRX2nGrdPyHDUCSG83WH2qE4XLACD33Q=

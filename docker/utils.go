@@ -1,10 +1,11 @@
-package main
+package docker
 
 import (
 	"fmt"
 	"log"
 	"strings"
 
+	"github.com/Devang-Solanki/RedHunt/Varunastra/config"
 	v1 "github.com/google/go-containerregistry/pkg/v1"
 )
 
@@ -20,7 +21,7 @@ func checkDupEntry(secret, typestr string, path string, finalResult []SecretIssu
 }
 
 // secretScanner scans the content for secrets and returns any issues found
-func secretScanner(path string, content *[]byte, id interface{}) ([]SecretIssue, error) {
+func secretScanner(path string, content *[]byte, id interface{}, regexDB config.RegexDB) ([]SecretIssue, error) {
 	var finalResult []SecretIssue
 	var place string
 
@@ -35,7 +36,7 @@ func secretScanner(path string, content *[]byte, id interface{}) ([]SecretIssue,
 		return nil, fmt.Errorf("unsupported type: %T", id)
 	}
 
-	for _, regex := range regexStore {
+	for _, regex := range regexDB {
 		x := regex.Pattern.FindAllSubmatch(*content, -1)
 		if len(x) > 0 {
 			for _, y := range x {

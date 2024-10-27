@@ -1,4 +1,4 @@
-package main
+package docker
 
 import (
 	"archive/tar"
@@ -8,6 +8,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/Devang-Solanki/RedHunt/Varunastra/config"
 	v1 "github.com/google/go-containerregistry/pkg/v1"
 )
 
@@ -20,21 +21,21 @@ func handleSpecialFiles(fileName string) bool {
 }
 
 // handleGitRepo handles the git repository detection
-func handleGitRepo(fileName string) {
-	var finalResult []VulnIssue
+// func handleGitRepo(fileName string) {
+// 	var finalResult []deps.VulnIssue
 
-	issue := VulnIssue{
-		Issue:      "Git Repo in the Image",
-		Path:       fileName,
-		CVSS3Score: 0,
-		Ref:        "https://www.firecompass.com/blog/how-do-attackers-utilize-git-for-fun-and-profit/",
-	}
+// 	issue := deps.VulnIssue{
+// 		Issue:      "Git Repo in the Image",
+// 		Path:       fileName,
+// 		CVSS3Score: 0,
+// 		Ref:        "https://www.firecompass.com/blog/how-do-attackers-utilize-git-for-fun-and-profit/",
+// 	}
 
-	finalOutput.Vulnerability = append(finalResult, issue)
-}
+// 	finalOutput.Vulnerability = append(finalResult, issue)
+// }
 
 // isExcluded checks if a file path matches any of the excluded patterns
-func isExcluded(filePath string) bool {
+func isExcluded(filePath string, excludedPatterns config.BlacklistedPattern) bool {
 	// Normalize file path separators for cross-platform compatibility
 	normalizedPath := strings.ReplaceAll(filePath, "\\", "/")
 

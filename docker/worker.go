@@ -1,23 +1,25 @@
-package main
+package docker
 
 import (
 	"log"
 	"strings"
 	"sync"
+
+	"github.com/Devang-Solanki/RedHunt/Varunastra/config"
 )
 
-func worker(wg *sync.WaitGroup) {
+func worker(wg *sync.WaitGroup, output *FinalOutput, scanMap config.ScanMap, regexDB config.RegexDB) {
 	defer wg.Done()
 	for task := range taskChannel {
 
 		if scanMap["secrets"] {
-			finalResult, err := secretScanner(task.Path, task.Content, task.ID)
+			finalResult, err := secretScanner(task.Path, task.Content, task.ID, regexDB)
 			if err != nil {
 				if !strings.Contains(err.Error(), "no secrets found in") {
 					log.Printf("Error scanning secrets: %s", err)
 				}
 			} else {
-				finalOutput.Secrets = append(finalOutput.Secrets, finalResult...)
+				output.Secrets = append(output.Secrets, finalResult...)
 			}
 		}
 	}

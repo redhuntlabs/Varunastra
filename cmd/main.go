@@ -6,13 +6,16 @@ import (
 	"log"
 	"os"
 	"strings"
-	"sync"
+
+	"github.com/Devang-Solanki/RedHunt/Varunastra/config"
+	"github.com/Devang-Solanki/RedHunt/Varunastra/docker"
 
 	"github.com/alecthomas/kong"
 )
 
 // handleScan processes the scan command.
-func handleScan(cli CLI) {
+func handleScan(cli config.CLI, regexDB config.RegexDB, excludedPatterns config.ExcludedPatterns) {
+	var scanMap config.ScanMap
 	// Process scans
 	defaultScans := []string{"secrets", "vuln", "assets"}
 
@@ -30,13 +33,6 @@ func handleScan(cli CLI) {
 		}
 	}
 
-	var workerwg sync.WaitGroup
-
-	for i := 0; i < workerCount; i++ {
-		workerwg.Add(1)
-		go worker(&workerwg)
-	}
-
 	if len(os.Args) < 2 {
 		log.Fatalf("Usage: %s <docker-image>", os.Args[0])
 	}
@@ -44,16 +40,14 @@ func handleScan(cli CLI) {
 	imageName := cli.Target
 
 	// Process each image
-	err := processImage(imageName)
+	err := docker.ProcessImage(imageName, scanMap, regexDB, excludedPatterns)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
-	close(taskChannel)
-	workerwg.Wait()
-
 	log.Println("Scanning completed.")
 
+	var finalOutput docker.FinalOutput
 	finalOutput.Target = imageName
 
 	data, _ := json.MarshalIndent(finalOutput, "", "  ")
@@ -62,7 +56,7 @@ func handleScan(cli CLI) {
 
 func main() {
 
-	var cli CLI
+	var cli config.CLI
 	ctx := kong.Parse(&cli)
 
 	// Process scans
@@ -83,12 +77,12 @@ func main() {
 		}
 	}
 
-	err := LoadConfig()
+	regexDB, excludedPatterns, err := config.LoadConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Process the command based on the context
-	handleScan(cli)
+	handleScan(cli, regexDB, excludedPatterns)
 	ctx.Exit(0)
 }
