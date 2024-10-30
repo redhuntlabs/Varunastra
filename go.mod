@@ -1,4 +1,4 @@
-module example.com/varunastra
+module github.com/redhuntlabs/Varunastra
 
 go 1.21.1
 
