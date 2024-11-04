@@ -32,7 +32,6 @@ func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns confi
 
 	data, _ := json.MarshalIndent(output, "", "  ")
 	config.HandleOutput(data, cli)
-
 }
 
 func main() {

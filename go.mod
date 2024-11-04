@@ -1,4 +1,4 @@
-module github.com/redhuntlabs/Varunastra
+module github.com/redhuntlabs/varunastra
 
 go 1.22.5
 
