@@ -2,13 +2,12 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"strings"
 
-	"github.com/Devang-Solanki/Varunastra/config"
-	"github.com/Devang-Solanki/Varunastra/docker"
+	"github.com/Devang-Solanki/Varunastra/pkg/config"
+	"github.com/Devang-Solanki/Varunastra/pkg/docker"
 
 	"github.com/alecthomas/kong"
 )
@@ -24,7 +23,7 @@ func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns confi
 	imageName := cli.Target
 
 	// Process each image
-	output, err := docker.ProcessImage(imageName, scanMap, regexDB, excludedPatterns)
+	output, err := docker.ProcessImage(imageName, scanMap, regexDB, excludedPatterns, cli.All)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -32,7 +31,8 @@ func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns confi
 	log.Println("Scanning completed.")
 
 	data, _ := json.MarshalIndent(output, "", "  ")
-	fmt.Println(string(data))
+	config.HandleOutput(data, cli)
+
 }
 
 func main() {
