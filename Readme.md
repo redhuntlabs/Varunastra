@@ -32,37 +32,61 @@ Introducing Varunastra, an innovative tool designed to enhance the security of D
 | Javascript | package-lock.json   |
 |            | yarn.lock           |
 
+**Supported Registry**
+| Registry       | Scopes |
+|----------------|--------|
+| DockerHub      | Public |
+| AWS ECR        | Public |
+| Google GCR     | Public |
+| Github GHCR    | Public |
+
 
 ### Installation Guide for Varunastra
 
-1. Clone the Repository Open your terminal and run the following command to clone the repository:
+You can install Varunastra in one of two ways: using Go or by downloading a pre-built binary.
+
+#### Option 1: Install using Go
+
+To install Varunastra using Go, run the following command:
 
 ```bash
-git clone https://github.com/redhuntlabs/Varunastra/
+go install github.com/Devang-Solanki/Varunastra/cmd/varunastra@latest
 ```
 
-2. Navigate to the Project Directory Change to the directory of the cloned repository:
+#### Option 2: Download Pre-built Binary
+If you prefer to use a pre-built binary, you can download the appropriate version for your operating system and architecture from the release page.
+
+#### Instructions to Download and Install
+
+1. Download the appropriate .zip file for your OS and architecture.
+2. Unzip the file to extract the binary.
+3. Move the binary to a directory included in your system's PATH (e.g., /usr/local/bin for Linux or macOS).
+4. Make the binary executable (if necessary):
 
 ```bash
-cd Varunastra
-```
-
-3. Build the Project Use the go build command to compile the project:
-
-```bash
-go build
+chmod +x /path/to/varunastra
 ```
 
 ### Usage
 
-```bash
+```
 Usage: varunastra --target=STRING [flags]
+
+Varunastra is a tool designed to detect and assist in mitigating vulnerabilities within Docker images.
+
+- For images hosted on Docker Hub, simply provide the repository name (e.g., `datadog/agent`).
+
+- For images from AWS or GCP, include the full registry URL (e.g., `public.ecr.aws/hashicorp/vault`).
+
+If no tag is specified in the repository URL, the tool will automatically choose a tag from the available options for scanning.
+
+Note: Domains are resolved via DNS queries, while URLs are extracted using regular expressions without resolution.
 
 Flags:
   -h, --help             Show context-sensitive help.
-      --target=STRING    Target string
-      --scans=STRING     Comma-separated scans (secrets,vuln,assets)
-      --all              Enable scanning for all tags
+      --target=STRING    Target repos
+      --scans=STRING     Comma-separated scans (secrets,vuln,assets). By default all scans are true if not specified any.
+      --all              Enable scanning for all tags.
       --output=STRING    Save JSON output to a file
 ```
 
