@@ -32,12 +32,17 @@ func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns confi
 
 	data, _ := json.MarshalIndent(output, "", "  ")
 	config.HandleOutput(data, cli)
+
 }
 
 func main() {
 
 	var cli config.CLI
-	ctx := kong.Parse(&cli)
+
+	ctx := kong.Parse(&cli,
+		kong.Name("varunastra"),
+		kong.Description("Varunastra is a tool designed to detect and assist in mitigating vulnerabilities within Docker images.\n\n- For images hosted on Docker Hub, simply provide the repository name (e.g., `datadog/agent`).\n\n- For images from AWS or GCP, include the full registry URL (e.g., `public.ecr.aws/hashicorp/vault`). \n\nIf no tag is specified in the repository URL, the tool will automatically choose a tag from the available options for scanning. \n\n Note: Domains are resolved via DNS queries, while URLs are extracted using regular expressions without resolution."),
+	)
 
 	// Process scans
 	scanMap := make(map[string]bool)
