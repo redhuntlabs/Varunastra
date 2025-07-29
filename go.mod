@@ -5,7 +5,7 @@ go 1.22.5
 toolchain go1.22.8
 
 require (
-	github.com/Devang-Solanki/Varunastra v0.0.0-20241115145541-06edf31099f7
+	github.com/Devang-Solanki/Varunastra v0.0.0-20250729105718-750fda67b6e1
 	github.com/alecthomas/kong v1.2.1
 )
 
@@ -24,7 +24,10 @@ require (
 	github.com/opencontainers/image-spec v1.1.0 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/tetratelabs/wazero v1.8.2 // indirect
 	github.com/vbatts/tar-split v0.11.3 // indirect
+	github.com/wasilibs/go-re2 v1.8.0 // indirect
+	github.com/wasilibs/wazero-helpers v0.0.0-20240620070341-3dff1577cd52 // indirect
 	github.com/weppos/publicsuffix-go v0.40.2 // indirect
 	golang.org/x/exp v0.0.0-20190121172915-509febef88a4 // indirect
 	golang.org/x/net v0.30.0 // indirect

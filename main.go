@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"html/template"
 	"log"
 	"os"
 	"strings"
@@ -13,7 +14,7 @@ import (
 )
 
 // handleScan processes the scan command.
-func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns config.ExcludedPatterns) {
+func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns config.ExcludedPatterns, whitelistedPatterns config.WhitelistedPatterns) {
 	if len(os.Args) < 2 {
 		log.Fatalf("Usage: %s <docker-image>", os.Args[0])
 	}
@@ -23,7 +24,7 @@ func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns confi
 	imageName := cli.Target
 
 	// Process each image
-	output, err := docker.ProcessImage(imageName, scanMap, regexDB, excludedPatterns, cli.All)
+	output, err := docker.ProcessImage(imageName, scanMap, regexDB, excludedPatterns, whitelistedPatterns, cli.All)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -33,6 +34,28 @@ func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns confi
 	data, _ := json.MarshalIndent(output, "", "  ")
 	config.HandleOutput(data, cli)
 
+	if cli.Html != "" {
+		log.Println("Generating Report")
+		// Step 3: Parse and execute the template with the parsed data
+		t, err := template.New("scanReport").Parse(tmpl)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Output to an HTML file (can be stdout or a file)
+		file, err := os.Create(cli.Html)
+		if err != nil {
+			log.Fatal(err)
+		}
+		defer file.Close()
+
+		err = t.Execute(file, output)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		log.Println("HTML report generated successfully as,", cli.Html)
+	}
 }
 
 func main() {
@@ -62,12 +85,12 @@ func main() {
 		}
 	}
 
-	regexDB, excludedPatterns, err := config.LoadConfig()
+	regexDB, excludedPatterns, whitelistedPatterns, err := config.LoadConfig()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Process the command based on the context
-	handleScan(cli, regexDB, excludedPatterns)
+	handleScan(cli, regexDB, excludedPatterns, whitelistedPatterns)
 	ctx.Exit(0)
 }
