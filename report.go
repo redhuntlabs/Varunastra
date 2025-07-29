@@ -9,10 +9,10 @@ var tmpl = `
 	<title>Varunastra Scan Report</title>
 	<style>
 		:root {
-			--bg-color: #ffffff;
-			--text-color: #111827;
-			--muted-text: #6b7280;
-			--border-color: #e5e7eb;
+			--bg-color: #111827;
+			--text-color: #f9fafb;
+			--muted-text: #9ca3af;
+			--border-color: #374151;
 			--accent-color: #3b82f6;
 		}
 
@@ -27,9 +27,25 @@ var tmpl = `
 			margin-right: auto;
 		}
 
-		.logo {
-			height: 40px;
-			margin-bottom: 16px;
+		.header-logos {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 24px;
+		}
+
+		.main-logo {
+			height: 48px;
+		}
+
+		.small-logo {
+			height: 38px;
+		}
+
+		.by-text {
+			font-size: 1.1rem;
+			color: var(--muted-text);
+			font-weight: 500;
 		}
 
 		h1 {
@@ -51,10 +67,7 @@ var tmpl = `
 			font-size: 1.125rem;
 			margin: 2rem 0 0.5rem;
 			font-weight: 500;
-			color: #1f2937;
-		}
-
-		.section {
+			color: var(--text-color);
 		}
 
 		.table {
@@ -72,7 +85,7 @@ var tmpl = `
 		}
 
 		.table th {
-			background-color: #f9fafb;
+			background-color: #1f2937;
 			font-weight: 500;
 		}
 
@@ -94,83 +107,87 @@ var tmpl = `
 	</style>
 </head>
 <body>
-	<img class="logo" src="https://redhuntlabs.com/wp-content/uploads/2023/12/cropped-logo.png" alt="RedHunt Labs Logo">
+	<div class="header-logos">
+		<img class="main-logo" src="https://camo.githubusercontent.com/5c386f6789aaea2f3bc11ab1f2c5d3570170e0eb43c98f6195257b332e45a404/68747470733a2f2f646576616e676861636b732e696e2f766172756e61737472612f63726f7065645f6c6f676f2e706e67" alt="Devang Hacks Logo">
+		<span class="by-text">by</span>
+		<img class="small-logo" src="https://redhuntlabs.com/wp-content/uploads/2023/02/footer-logo.png" alt="RedHunt Labs Logo">
+	</div>
 
-<h1>Varunastra Scan Results</h1>
+	<h1>Varunastra Scan Results</h1>
 
-<div class="section">
-	<h2>Target: {{.Target}}</h2>
+	<div class="section">
+		<h2>Target: {{.Target}}</h2>
 
-	<h3>Secrets Found:</h3>
-	{{if .Secrets}}
-	<table class="table">
-		<tr>
-			<th>Issue</th>
-			<th>Path</th>
-			<th>Type</th>
-			<th>Secret</th>
-		</tr>
-		{{range .Secrets}}
-		<tr>
-			<td>{{.Issue}}</td>
-			<td>{{.Path}}</td>
-			<td>{{.Type}}</td>
-			<td>{{.Secret}}</td>
-		</tr>
+		<h3>Secrets Found:</h3>
+		{{if .Secrets}}
+		<table class="table">
+			<tr>
+				<th>Issue</th>
+				<th>Path</th>
+				<th>Type</th>
+				<th>Secret</th>
+			</tr>
+			{{range .Secrets}}
+			<tr>
+				<td>{{.Issue}}</td>
+				<td>{{.Path}}</td>
+				<td>{{.Type}}</td>
+				<td>{{.Secret}}</td>
+			</tr>
+			{{end}}
+		</table>
+		{{else}}
+		<p class="empty-message">No secrets found.</p>
 		{{end}}
-	</table>
-	{{else}}
-	<p class="empty-message">No secrets found.</p>
-	{{end}}
 
-	<h3>Vulnerabilities Found:</h3>
-	{{if .Vulnerability}}
-	<table class="table">
-		<tr>
-			<th>Title</th>
-			<th>Issue</th>
-		</tr>
-		{{range .Vulnerability}}
-		<tr>
-			<td>{{.Title}}</td>
-			<td>{{.Issue}}</td>
-		</tr>
+		<h3>Vulnerabilities Found:</h3>
+		{{if .Vulnerability}}
+		<table class="table">
+			<tr>
+				<th>Title</th>
+				<th>Issue</th>
+			</tr>
+			{{range .Vulnerability}}
+			<tr>
+				<td>{{.Title}}</td>
+				<td>{{.Issue}}</td>
+			</tr>
+			{{end}}
+		</table>
+		{{else}}
+		<p class="empty-message">No vulnerabilities found.</p>
 		{{end}}
-	</table>
-	{{else}}
-	<p class="empty-message">No vulnerabilities found.</p>
-	{{end}}
 
-	<h3>Assets:</h3>
+		<h3>Assets:</h3>
 
-	<h4>Domains:</h4>
-	{{if .Assets.Domains}}
-	<table class="table">
-		<tr>
-			<th>Domain</th>
-			<th>Subdomains</th>
-		</tr>
-		{{range .Assets.Domains}}
-		<tr>
-			<td>{{.Domain}}</td>
-			<td>{{range .Subdomains}}{{.}}<br>{{end}}</td>
-		</tr>
+		<h4>Domains:</h4>
+		{{if .Assets.Domains}}
+		<table class="table">
+			<tr>
+				<th>Domain</th>
+				<th>Subdomains</th>
+			</tr>
+			{{range .Assets.Domains}}
+			<tr>
+				<td>{{.Domain}}</td>
+				<td>{{range .Subdomains}}{{.}}<br>{{end}}</td>
+			</tr>
+			{{end}}
+		</table>
+		{{else}}
+		<p class="empty-message">No domains found.</p>
 		{{end}}
-	</table>
-	{{else}}
-	<p class="empty-message">No domains found.</p>
-	{{end}}
 
-	<h4>URLs:</h4>
-	{{if .Assets.Urls}}
-	<ul>
-		{{range .Assets.Urls}}
-		<li>{{.}}</li>
+		<h4>URLs:</h4>
+		{{if .Assets.Urls}}
+		<ul>
+			{{range .Assets.Urls}}
+			<li>{{.}}</li>
+			{{end}}
+		</ul>
+		{{else}}
+		<p class="empty-message">No URLs found.</p>
 		{{end}}
-	</ul>
-	{{else}}
-	<p class="empty-message">No URLs found.</p>
-	{{end}}
 
 	</div>
 </body>
