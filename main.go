@@ -49,7 +49,7 @@ func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns confi
 		}
 		defer file.Close()
 
-		err = t.Execute(file, output)
+		err = t.Execute(file, output[0])
 		if err != nil {
 			log.Fatal(err)
 		}
