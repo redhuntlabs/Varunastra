@@ -45,26 +45,12 @@ Introducing Varunastra, an innovative tool designed to enhance the security of D
 
 You can install Varunastra in one of two ways: using Go or by downloading a pre-built binary.
 
-#### Option 1: Install using Go
+#### Install using Go
 
 To install Varunastra using Go, run the following command:
 
 ```bash
 go install github.com/Devang-Solanki/Varunastra/cmd/varunastra@latest
-```
-
-#### Option 2: Download Pre-built Binary
-If you prefer to use a pre-built binary, you can download the appropriate version for your operating system and architecture from the release page.
-
-#### Instructions to Download and Install
-
-1. Download the appropriate .zip file for your OS and architecture.
-2. Unzip the file to extract the binary.
-3. Move the binary to a directory included in your system's PATH (e.g., /usr/local/bin for Linux or macOS).
-4. Make the binary executable (if necessary):
-
-```bash
-chmod +x /path/to/varunastra
 ```
 
 ### Usage
