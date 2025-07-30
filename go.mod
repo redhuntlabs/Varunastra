@@ -5,7 +5,7 @@ go 1.22.5
 toolchain go1.22.8
 
 require (
-	github.com/Devang-Solanki/Varunastra v0.0.0-20250729105718-750fda67b6e1
+	github.com/Devang-Solanki/Varunastra v0.0.0-20250730144446-4695b355bc05
 	github.com/alecthomas/kong v1.2.1
 )
 

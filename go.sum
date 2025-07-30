@@ -1,7 +1,7 @@
 cloud.google.com/go/compute/metadata v0.2.0/go.mod h1:zFmK7XCadkQkj6TtorcaGlCW1hT1fIilQDwofLpJ20k=
 github.com/BurntSushi/toml v1.2.1/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
-github.com/Devang-Solanki/Varunastra v0.0.0-20250729105718-750fda67b6e1 h1:AZQS4/OnMVGq5pnTsrZygrYvMVQc5JwkBY2fw8NqbLw=
-github.com/Devang-Solanki/Varunastra v0.0.0-20250729105718-750fda67b6e1/go.mod h1:xkqpn9TLESia9cvvGM3WgI2VMSskfTtvIdSgC6MrNCg=
+github.com/Devang-Solanki/Varunastra v0.0.0-20250730144446-4695b355bc05 h1:9RdN8319dAXBJWEhZZVp0mCW4yVwtHU7nXSCgyvA2uk=
+github.com/Devang-Solanki/Varunastra v0.0.0-20250730144446-4695b355bc05/go.mod h1:xkqpn9TLESia9cvvGM3WgI2VMSskfTtvIdSgC6MrNCg=
 github.com/Devang-Solanki/go-ruby-bundler-audit v0.0.0-20240628095326-ed9f8dcd65cb h1:OBBMkNJk1zTs+AOpvh4GYFWCAQR1UxxWhINZwRt2b5w=
 github.com/Devang-Solanki/go-ruby-bundler-audit v0.0.0-20240628095326-ed9f8dcd65cb/go.mod h1:qr7eikDhBD1r466Sr1CaAUpADNMcH9oAzntdXfJllUs=
 github.com/Masterminds/semver/v3 v3.3.0 h1:B8LGeaivUe71a5qox1ICM/JLl0NqZSW5CHyL+hmvYS0=

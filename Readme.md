@@ -39,7 +39,45 @@ Introducing Varunastra, an innovative tool designed to enhance the security of D
 | Github GHCR    | Public |
 
 
-### Installation Guide for Varunastra
+## Config
+
+The data directory contains the default configuration files used by the tool for secret scanning.
+
+🔧 config.yaml
+This is the default configuration file that controls which files and directories are included or excluded during secret scanning. It follows this structure:
+```yaml
+# Configuration file for excluding known-safe paths from secret scanning.
+
+regex_files:
+  path: "~/.config/varunastra/regexes.json"
+  # Path to an external JSON file containing additional regex patterns.
+  # This may be interpreted relative to the user's home directory.
+
+blacklisted_patterns:
+  - pattern: "(.*/)?__pycache__"
+    # Skips scanning "__pycache__" directories, which contain non-sensitive Python bytecode.
+
+whitelisted_patterns:
+  - pattern: "(.*/)?app"
+    # Ensures the "/app" directory is always scanned, even if it matches a blacklisted pattern.
+
+```
+This file allows users to define:
+- Regex file path for additional scanning rules
+- Blacklisted patterns: directories or files to ignore to reduce false positives
+- Whitelisted patterns: directories or files that must always be scanned, even if blacklisted
+
+📄 regexes.json
+This file contains the default regular expressions used for secret scanning. It follows a simple structure:
+```json
+{
+  "Pattern": "the actual Go-compatible regex"
+}
+```
+
+Each entry defines a regex pattern that the scanner will run during scans. This allows for easy extension and customization of what the tool considers a secret.
+
+## Installation Guide for Varunastra
 
 You can install Varunastra using Go.
 
@@ -73,7 +111,6 @@ Flags:
       --all              Enable scanning for all tags.
       --output=STRING    Save JSON output to a file
 ```
-
 
 #### Example 
 
@@ -151,3 +188,6 @@ varunastra --target devangsolankii/secrets --scans "secrets,vuln,assets"
   }
 ]
 ```
+
+
+*[`To know more about our Attack Surface Management platform, check out NVADR.`](https://redhuntlabs.com/nvadr)*
