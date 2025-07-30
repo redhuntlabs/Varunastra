@@ -1,0 +1,55 @@
+regex_files:
+  path: ".config/varunastra/regexes.json"
+    # WARNING: In code, this will be interpreted as $HOMEDIR/path
+blacklisted_patterns:
+  - pattern: "(?i)opt/yarn-v[\\d.]+/"
+    # Yarn packages typically contain no secrets.
+
+  - pattern: "(?i)opt/(oracle|google|python/lib|datadog-agent)/"
+    # These directories hold application packages, not secrets.
+
+  - pattern: "(?i)\\.cache/puppeteer/"
+    # Cache files usually don't store sensitive data.
+
+  - pattern: "(?i)usr/local/go/"
+    # Go binaries do not typically contain secrets.
+
+  - pattern: "(?i)(usr/(local/lib|lib|include)/python[\\d.]+)/|(/.cache/pip)|(/python[\\d.]+/(site|dist)-packages/)"
+    # These paths are for libraries and often do not contain secrets.
+
+  - pattern: "(?i)usr/lib/gems/"
+    # Ruby gems are package managers, unlikely to have secrets.
+
+  - pattern: "(?i)usr/src/wordpress/"
+    # Source code directories usually don't contain secrets.
+
+  - pattern: "(?i)var/log/anaconda/"
+    # Logs do not typically contain sensitive information.
+
+  - pattern: "(?i)usr/(local|share)"
+    # Shared directories do not store secrets.
+
+  - pattern: "(?i)var/(?:tmp|cache|run)"
+    # These are transient directories and unlikely to contain secrets.
+
+  - pattern: "(^(?i)test|/test|-test|_test|\\.test)"
+    # Test files typically do not contain real credentials.
+
+  - pattern: "(?i)example"
+    # Example files are usually placeholders, not secrets.
+
+  - pattern: "(?i)/vendor/"
+
+  - pattern: "(?i)private/ssl-cert-snakeoil\\.key"
+    # This is often a default placeholder and does not represent real secrets.
+
+  - pattern: "(?i)dist/awscli/botocore/"
+    # Library paths do not contain secrets.
+
+  - pattern: "(?i)/openjdk-[\\d.]+/"
+    # Java libraries typically do not have sensitive information.
+
+  - pattern: "(?i)/locales?/"
+
+  - pattern: "(?i)\\.npm/_cacache/"
+    # npm cache directory typically does not contain secrets.
