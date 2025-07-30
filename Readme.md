@@ -4,9 +4,8 @@
 </p>
 <p align="center">
 <a href="https://www.gnu.org/licenses/gpl-3.0.en.html/"><img src="https://img.shields.io/badge/license-GPL_3.0-_red.svg"></a>
-<a href="https://goreportcard.com/badge/github.com/Devang-Solanki/Varunastra"><img src="https://goreportcard.com/badge/github.com/Devang-Solanki/Varunastra"></a>
+<a href="https://goreportcard.com/badge/github.com/redhuntlabs/Varunastra"><img src="https://goreportcard.com/badge/github.com/redhuntlabs/Varunastra"></a>
 <a href="https://go.dev/blog/go1.22.5"><img src="https://img.shields.io/github/go-mod/go-version/Devang-Solanki/Varunastra"></a>
-<a href="https://twitter.com/devangsolankii"><img src="https://img.shields.io/twitter/follow/devangsolankii.svg?logo=twitter"></a>
 </p>
 <p align="center">
   <a href="#installation-guide-for-varunastra">Installation</a>
@@ -29,8 +28,7 @@ Introducing Varunastra, an innovative tool designed to enhance the security of D
 | Language   | File                |
 |------------|---------------------|
 | Ruby       | Gemfile.lock        |
-| Javascript | package-lock.json   |
-|            | yarn.lock           |
+| Javascript | package-lock.json, yarn.lock   |
 
 **Supported Registry**
 | Registry       | Scopes |
@@ -43,14 +41,14 @@ Introducing Varunastra, an innovative tool designed to enhance the security of D
 
 ### Installation Guide for Varunastra
 
-You can install Varunastra in one of two ways: using Go or by downloading a pre-built binary.
+You can install Varunastra using Go.
 
 #### Install using Go
 
 To install Varunastra using Go, run the following command:
 
 ```bash
-go install github.com/Devang-Solanki/Varunastra/cmd/varunastra@latest
+go install github.com/redhuntlabs/varunastra@latest
 ```
 
 ### Usage
@@ -153,5 +151,3 @@ varunastra --target devangsolankii/secrets --scans "secrets,vuln,assets"
   }
 ]
 ```
-
-<a href="https://www.buymeacoffee.com/devangsolankii" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174" /></a>
