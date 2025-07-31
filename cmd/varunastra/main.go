@@ -7,8 +7,8 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Devang-Solanki/Varunastra/pkg/config"
-	"github.com/Devang-Solanki/Varunastra/pkg/docker"
+	"github.com/redhuntlabs/Varunastra/pkg/config"
+	"github.com/redhuntlabs/Varunastra/pkg/docker"
 
 	"github.com/alecthomas/kong"
 )
@@ -49,7 +49,7 @@ func handleScan(cli config.CLI, regexDB []config.RegexDB, excludedPatterns confi
 		}
 		defer file.Close()
 
-		err = t.Execute(file, output[0])
+		err = t.Execute(file, output)
 		if err != nil {
 			log.Fatal(err)
 		}

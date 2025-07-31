@@ -9,112 +9,97 @@ var tmpl = `
 	<title>Varunastra Scan Report</title>
 	<style>
 		:root {
-			--bg-color: #111827;
-			--text-color: #f9fafb;
-			--muted-text: #9ca3af;
-			--border-color: #374151;
+			--bg-color: #f0f4f8;
+			--card-bg: #ffffff;
+			--text-color: #2e3a59;
+			--muted-text: #6b7280;
+			--table-header: #e5eaf1;
+			--border-color: #d1d5db;
 			--accent-color: #3b82f6;
 		}
 
 		body {
-			font-family: system-ui, sans-serif;
+			font-family: 'Helvetica Neue', sans-serif;
 			background-color: var(--bg-color);
 			color: var(--text-color);
 			margin: 0;
 			padding: 40px 20px;
-			line-height: 1.7;
-			margin-left: auto;
-			margin-right: auto;
+			line-height: 1.6;
 		}
 
-		.header-logos {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-			margin-bottom: 24px;
-		}
-
-		.main-logo {
-			height: 48px;
-		}
-
-		.small-logo {
-			height: 38px;
-		}
-
-		.by-text {
-			font-size: 1.1rem;
-			color: var(--muted-text);
-			font-weight: 500;
+		h1, h2, h3, h4 {
+			margin-top: 0;
 		}
 
 		h1 {
 			font-size: 2rem;
-			font-weight: 600;
-			border-bottom: 1px solid var(--border-color);
-			padding-bottom: 0.75rem;
-			margin-bottom: 2rem;
+			margin-bottom: 30px;
+			border-bottom: 2px solid var(--border-color);
+			padding-bottom: 10px;
 		}
 
-		h2 {
-			font-size: 1.5rem;
-			color: var(--accent-color);
-			margin: 2.5rem 0 1rem;
-			font-weight: 500;
+		.section {
+			background-color: var(--card-bg);
+			border-radius: 10px;
+			box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+			padding: 25px 30px;
+			margin-bottom: 30px;
+			transition: background-color 0.3s;
 		}
 
-		h3, h4 {
-			font-size: 1.125rem;
-			margin: 2rem 0 0.5rem;
-			font-weight: 500;
-			color: var(--text-color);
+		.section:hover {
+			background-color: #fdfefe;
 		}
 
 		.table {
 			width: 100%;
 			border-collapse: collapse;
-			margin-top: 0.75rem;
-			font-size: 0.95rem;
+			margin-top: 10px;
+			border-radius: 6px;
+			overflow: hidden;
 		}
 
 		.table th, .table td {
 			border: 1px solid var(--border-color);
-			padding: 12px;
+			padding: 12px 14px;
 			text-align: left;
-			vertical-align: top;
 		}
 
 		.table th {
-			background-color: #1f2937;
-			font-weight: 500;
+			background-color: var(--table-header);
+			color: var(--text-color);
+			font-weight: 600;
 		}
 
 		ul {
-			padding-left: 1.25rem;
-			margin-top: 0.5rem;
+			padding-left: 20px;
+			margin-top: 10px;
 		}
 
 		li {
-			margin-bottom: 0.4rem;
+			margin-bottom: 6px;
 		}
 
 		p.empty-message {
 			color: var(--muted-text);
 			font-style: italic;
-			font-size: 1rem;
-			margin-top: 0.5rem;
+			margin-top: 5px;
+		}
+
+		h2 {
+			color: var(--accent-color);
+			margin-bottom: 15px;
+		}
+
+		h3, h4 {
+			margin-top: 20px;
+			color: #374151;
 		}
 	</style>
 </head>
 <body>
-	<div class="header-logos">
-		<img class="main-logo" src="https://camo.githubusercontent.com/5c386f6789aaea2f3bc11ab1f2c5d3570170e0eb43c98f6195257b332e45a404/68747470733a2f2f646576616e676861636b732e696e2f766172756e61737472612f63726f7065645f6c6f676f2e706e67" alt="Devang Hacks Logo">
-		<span class="by-text">by</span>
-		<img class="small-logo" src="https://redhuntlabs.com/wp-content/uploads/2023/02/footer-logo.png" alt="RedHunt Labs Logo">
-	</div>
-
-	<h1>Varunastra Scan Results</h1>
-
+	<h1>Scan Results</h1>
+	{{range .}}
 	<div class="section">
 		<h2>Target: {{.Target}}</h2>
 
@@ -188,8 +173,8 @@ var tmpl = `
 		{{else}}
 		<p class="empty-message">No URLs found.</p>
 		{{end}}
-
 	</div>
+	{{end}}
 </body>
 </html>
 `
