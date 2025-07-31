@@ -86,7 +86,7 @@ You can install Varunastra using Go.
 To install Varunastra using Go, run the following command:
 
 ```bash
-go install github.com/redhuntlabs/varunastra@latest
+go install github.com/redhuntlabs/Varunastra/cmd/varunastra@latest
 ```
 
 ### Usage
